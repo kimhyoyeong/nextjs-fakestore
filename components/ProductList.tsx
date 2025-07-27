@@ -32,10 +32,10 @@ function ProductCard({ product }: { product: Product }) {
           {product.title}
         </h3>
         <div className="mb-2 flex items-center gap-2">
-          <span className="text-xl font-bold text-blue-600 dark:text-blue-400">
+          <span className="text-xl font-bold text-orange-500 dark:text-orange-400">
             ${product.price}
           </span>
-          <span className="rounded-full bg-gray-200 px-2 py-1 text-xs text-gray-700 dark:bg-gray-700 dark:text-gray-300">
+          <span className="rounded-full bg-gradient-to-r from-orange-100 to-pink-100 px-2 py-1 text-xs text-orange-700 dark:from-orange-900/30 dark:to-pink-900/30 dark:text-orange-300">
             {product.category}
           </span>
         </div>

@@ -1,9 +1,7 @@
-import { Skeleton as UISkeleton } from '@/components/ui/skeleton';
-
 // 기본 스켈레톤 컴포넌트
 export function Skeleton({ className = '' }: { className?: string }) {
   return (
-    <UISkeleton
+    <div
       className={`relative overflow-hidden rounded-md bg-gray-300 ${className}`}
       style={{
         background: 'linear-gradient(90deg, #d1d5db 25%, #e5e7eb 50%, #d1d5db 75%)',
