@@ -4,10 +4,10 @@ import { useEffect } from 'react';
 import { useStore } from '@/lib/stores/useStore';
 import { CategoryNav } from '@/components/CategoryNav';
 import { ProductList } from '@/components/ProductList';
-import { LoadingSpinner } from '@/components/LoadingSpinner';
+import { ProductListSkeleton, CategoryNavSkeleton } from '@/components/Skeleton';
 
 export default function Home() {
-  const { filteredProducts, loading, fetchProducts } = useStore();
+  const { filteredProducts, loading, fetchProducts, products } = useStore();
 
   useEffect(() => {
     fetchProducts();
@@ -20,9 +20,9 @@ export default function Home() {
           상품 목록
         </h1>
 
-        <CategoryNav />
+        {loading || products.length === 0 ? <CategoryNavSkeleton /> : <CategoryNav />}
 
-        {loading ? <LoadingSpinner /> : <ProductList products={filteredProducts} />}
+        {loading ? <ProductListSkeleton /> : <ProductList products={filteredProducts} />}
       </div>
     </div>
   );

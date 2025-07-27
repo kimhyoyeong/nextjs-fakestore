@@ -9,6 +9,7 @@ interface Store {
   fetchProducts: () => Promise<void>;
   setSelectedCategory: (category: string) => void;
   getCategories: () => string[];
+  getCategoryCounts: () => Record<string, number>;
 }
 
 export const useStore = create<Store>((set, get) => ({
@@ -22,6 +23,10 @@ export const useStore = create<Store>((set, get) => ({
     try {
       const response = await fetch('https://fakestoreapi.com/products');
       const products = await response.json();
+
+      // 테스트용 딜레이
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
       set({ products, filteredProducts: products, loading: false });
       console.log(products);
     } catch (error) {
@@ -41,5 +46,16 @@ export const useStore = create<Store>((set, get) => ({
   getCategories: () => {
     const { products } = get();
     return Array.from(new Set(['all', ...products.map((p) => p.category)]));
+  },
+
+  getCategoryCounts: () => {
+    const { products } = get();
+    const counts: Record<string, number> = { all: products.length };
+
+    products.forEach((product) => {
+      counts[product.category] = (counts[product.category] || 0) + 1;
+    });
+
+    return counts;
   },
 }));
