@@ -32,9 +32,10 @@ export const useStore = create<Store>((set, get) => ({
         filteredProducts:
           get().selectedCategory === 'all'
             ? products
-            : products.filter((p) => p.category === get().selectedCategory),
+            : products.filter((p: Product) => p.category === get().selectedCategory),
         loading: false,
       });
+      console.log('products', products);
     } catch (error) {
       console.error('상품을 가져오는데 실패했습니다:', error);
       set({ loading: false });
@@ -45,7 +46,9 @@ export const useStore = create<Store>((set, get) => ({
     const currentCategory = category ?? 'all';
     const { products } = get();
     const filtered =
-      currentCategory === 'all' ? products : products.filter((p) => p.category === currentCategory);
+      currentCategory === 'all'
+        ? products
+        : products.filter((p: Product) => p.category === currentCategory);
 
     set({
       selectedCategory: currentCategory,
@@ -55,7 +58,7 @@ export const useStore = create<Store>((set, get) => ({
 
   getCategories: () => {
     const { products } = get();
-    return ['all', ...Array.from(new Set(products.map((p) => p.category)))];
+    return ['all', ...Array.from(new Set(products.map((p: Product) => p.category)))];
   },
 
   getCategoryCounts: () => {
