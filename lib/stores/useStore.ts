@@ -7,7 +7,7 @@ interface Store {
   selectedCategory: string;
   loading: boolean;
   fetchProducts: () => Promise<void>;
-  setSelectedCategory: (category: string) => void;
+  setSelectedCategory: (category: string | null) => void;
   getCategories: () => string[];
   getCategoryCounts: () => Record<string, number>;
 }
@@ -27,35 +27,43 @@ export const useStore = create<Store>((set, get) => ({
       // 테스트용 딜레이
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      set({ products, filteredProducts: products, loading: false });
-      console.log(products);
+      set({
+        products,
+        filteredProducts:
+          get().selectedCategory === 'all'
+            ? products
+            : products.filter((p) => p.category === get().selectedCategory),
+        loading: false,
+      });
     } catch (error) {
       console.error('상품을 가져오는데 실패했습니다:', error);
       set({ loading: false });
     }
   },
 
-  setSelectedCategory: (category: string) => {
+  setSelectedCategory: (category: string | null) => {
+    const currentCategory = category ?? 'all';
     const { products } = get();
-    const filteredProducts =
-      category === 'all' ? products : products.filter((product) => product.category === category);
+    const filtered =
+      currentCategory === 'all' ? products : products.filter((p) => p.category === currentCategory);
 
-    set({ selectedCategory: category, filteredProducts });
+    set({
+      selectedCategory: currentCategory,
+      filteredProducts: filtered,
+    });
   },
 
   getCategories: () => {
     const { products } = get();
-    return Array.from(new Set(['all', ...products.map((p) => p.category)]));
+    return ['all', ...Array.from(new Set(products.map((p) => p.category)))];
   },
 
   getCategoryCounts: () => {
     const { products } = get();
-    const counts: Record<string, number> = { all: products.length };
-
-    products.forEach((product) => {
-      counts[product.category] = (counts[product.category] || 0) + 1;
-    });
-
-    return counts;
+    return products.reduce<Record<string, number>>((acc, product) => {
+      acc[product.category] = (acc[product.category] || 0) + 1;
+      acc['all'] = (acc['all'] || 0) + 1;
+      return acc;
+    }, {});
   },
 }));

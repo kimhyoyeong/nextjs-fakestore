@@ -1,23 +1,34 @@
 'use client';
 
 import { useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 import { useStore } from '@/lib/stores/useStore';
 import { CategoryNav } from '@/components/CategoryNav';
 import { ProductList } from '@/components/ProductList';
 import { ProductListSkeleton, CategoryNavSkeleton } from '@/components/Skeleton';
 
 export default function Home() {
-  const { filteredProducts, loading, fetchProducts, products } = useStore();
+  const searchParams = useSearchParams();
+  const category = searchParams.get('category') || 'all';
+
+  const { filteredProducts, loading, fetchProducts, products, setSelectedCategory } = useStore();
 
   useEffect(() => {
     fetchProducts();
-  }, [fetchProducts]);
+  }, []);
+
+  useEffect(() => {
+    if (products.length > 0) {
+      setSelectedCategory(category);
+    }
+  }, [category, products.length, setSelectedCategory]);
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8 flex justify-center">
-          <div className="flex items-center gap-3">
+          <Link href="/" className="flex items-center gap-3 transition-opacity hover:opacity-80">
             <span className="inline-block rounded-full bg-gradient-to-tr from-orange-400 via-red-500 to-pink-500 p-2 shadow-lg">
               <svg width={40} height={40} viewBox="0 0 40 40" fill="none" aria-hidden="true">
                 <rect width="40" height="40" rx="12" fill="url(#logo-gradient)" />
@@ -50,7 +61,7 @@ export default function Home() {
             <span className="bg-gradient-to-tr from-orange-400 via-red-500 to-pink-500 bg-clip-text text-4xl font-extrabold tracking-tight text-transparent select-none">
               Store
             </span>
-          </div>
+          </Link>
         </div>
 
         {loading || products.length === 0 ? <CategoryNavSkeleton /> : <CategoryNav />}
