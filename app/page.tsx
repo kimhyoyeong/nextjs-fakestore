@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useStore } from '@/lib/stores/useStore';
@@ -8,7 +8,7 @@ import { CategoryNav } from '@/components/CategoryNav';
 import { ProductList } from '@/components/ProductList';
 import { ProductListSkeleton, CategoryNavSkeleton } from '@/components/Skeleton';
 
-export default function Home() {
+function HomeContent() {
   const searchParams = useSearchParams();
   const category = searchParams.get('category') || 'all';
 
@@ -69,5 +69,13 @@ export default function Home() {
         {loading ? <ProductListSkeleton /> : <ProductList products={filteredProducts} />}
       </div>
     </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <HomeContent />
+    </Suspense>
   );
 }
