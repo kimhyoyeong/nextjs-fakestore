@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import { Product } from '@/types/product';
 
@@ -39,6 +41,9 @@ function ProductCard({ product }: { product: Product }) {
             {product.category}
           </span>
         </div>
+        <button className="mt-2 w-fit rounded-lg bg-gradient-to-r from-orange-400 via-red-500 to-pink-500 px-4 py-2 text-sm font-medium text-white transition-all duration-200 hover:scale-105 hover:shadow-lg">
+          장바구니 추가
+        </button>
       </div>
     </div>
   );

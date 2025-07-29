@@ -7,6 +7,7 @@ import { useStore } from '@/lib/stores/useStore';
 import { CategoryNav } from '@/components/CategoryNav';
 import { ProductList } from '@/components/ProductList';
 import { ProductListSkeleton, CategoryNavSkeleton } from '@/components/Skeleton';
+import { CartButton } from '@/components/CartButton';
 
 function HomeContent() {
   const searchParams = useSearchParams();
@@ -68,6 +69,8 @@ function HomeContent() {
 
         {loading ? <ProductListSkeleton /> : <ProductList products={filteredProducts} />}
       </div>
+
+      <CartButton />
     </div>
   );
 }
