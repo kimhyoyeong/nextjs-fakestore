@@ -1,11 +1,14 @@
-import { useStore } from '@/lib/stores/useStore';
+'use client';
+
 import Link from 'next/link';
 
-export function CategoryNav() {
-  const { getCategories, selectedCategory, getCategoryCounts } = useStore();
-  const categories = getCategories();
-  const counts = getCategoryCounts();
+interface CategoryProps {
+  categories: string[];
+  selectedCategory?: string;
+  categoryCounts?: Record<string, number>;
+}
 
+export function CategoryNav({ categories, selectedCategory, categoryCounts }: CategoryProps) {
   return (
     <nav className="mb-6 flex justify-center">
       <ul className="flex items-center gap-2 overflow-x-auto border-b whitespace-nowrap">
@@ -19,7 +22,8 @@ export function CategoryNav() {
                   : 'text-gray-400 hover:text-orange-500 dark:text-gray-500 dark:hover:text-orange-400'
               }`}
             >
-              {category.toUpperCase()}({counts[category]})
+              {category.toUpperCase()}
+              {categoryCounts && `(${categoryCounts[category]})`}
             </Link>
           </li>
         ))}
