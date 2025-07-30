@@ -5,9 +5,21 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'fakestoreapi.com',
+        hostname: 'placehold.co',
         port: '',
-        pathname: '/img/**',
+        pathname: '/**', // 모든 경로 허용
+      },
+      {
+        protocol: 'https',
+        hostname: 'api.escuelajs.co',
+        port: '',
+        pathname: '/**', // 모든 경로 허용
+      },
+      {
+        protocol: 'https',
+        hostname: 'i.imgur.com',
+        port: '',
+        pathname: '/**',
       },
     ],
   },

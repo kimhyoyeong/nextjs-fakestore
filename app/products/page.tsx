@@ -3,7 +3,11 @@ import { ProductsPageClient } from '@/components/features/products/ProductsPageC
 
 export default async function ProductsPage() {
   const products = await fetchProducts(); // 전체 상품
-  const categories = await fetchCategories();
+  const categories = await fetchCategories(); // 카테고리
 
-  return <ProductsPageClient products={products} categories={categories} />;
+  return (
+    <>
+      <ProductsPageClient products={products} categories={categories} />
+    </>
+  );
 }

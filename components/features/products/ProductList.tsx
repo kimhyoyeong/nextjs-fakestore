@@ -22,7 +22,7 @@ function ProductCard({ product }: { product: Product }) {
     <div className="flex overflow-hidden bg-white p-8 duration-300 dark:bg-gray-800">
       <div className="relative h-32 w-32 flex-shrink-0">
         <Image
-          src={product.image}
+          src={product.images[0]}
           alt={product.title}
           fill
           className="object-contain p-2"
@@ -38,7 +38,7 @@ function ProductCard({ product }: { product: Product }) {
             ${product.price}
           </span>
           <span className="rounded-full bg-gradient-to-r from-orange-100 to-pink-100 px-2 py-1 text-xs text-orange-700 dark:from-orange-900/30 dark:to-pink-900/30 dark:text-orange-300">
-            {product.category}
+            {product.category.name}
           </span>
         </div>
         <button className="mt-2 w-fit rounded-lg bg-gradient-to-r from-orange-400 via-red-500 to-pink-500 px-4 py-2 text-sm font-medium text-white transition-all duration-200 hover:scale-105 hover:shadow-lg">

@@ -29,7 +29,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${roboto.variable} ${robotoMono.variable} antialiased`}>
         <Header />
-        <main>{children}</main>
+        <main className="min-h-screen bg-gray-50 dark:bg-gray-900">{children}</main>
       </body>
     </html>
   );
