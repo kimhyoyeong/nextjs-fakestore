@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useStore } from '@/lib/stores/useStore';
 import { CategoryNav } from '@/components/features/navigation/CategoryNav';
@@ -11,10 +11,9 @@ import {
 } from '@/components/features/products/ProductSkeleton';
 import { CartButton } from '@/components/features/cart/CartButton';
 
-export default function ProductsPage() {
+function ProductsContent() {
   const searchParams = useSearchParams();
   const category = searchParams.get('category') || 'all';
-
   const { filteredProducts, loading, fetchProducts, products, setSelectedCategory } = useStore();
 
   useEffect(() => {
@@ -38,5 +37,13 @@ export default function ProductsPage() {
       </div>
       <CartButton />
     </>
+  );
+}
+
+export default function ProductsPage() {
+  return (
+    <Suspense fallback={<ProductListSkeleton />}>
+      <ProductsContent />
+    </Suspense>
   );
 }
