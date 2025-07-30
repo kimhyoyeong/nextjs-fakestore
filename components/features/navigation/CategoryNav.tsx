@@ -4,8 +4,8 @@ import Link from 'next/link';
 
 interface CategoryProps {
   categories: string[];
-  selectedCategory?: string;
-  categoryCounts?: Record<string, number>;
+  selectedCategory: string;
+  categoryCounts: Record<string, number>;
 }
 
 export function CategoryNav({ categories, selectedCategory, categoryCounts }: CategoryProps) {
@@ -23,7 +23,7 @@ export function CategoryNav({ categories, selectedCategory, categoryCounts }: Ca
               }`}
             >
               {category.toUpperCase()}
-              {categoryCounts && `(${categoryCounts[category]})`}
+              {categoryCounts && ` (${categoryCounts[category] || 0})`}
             </Link>
           </li>
         ))}
