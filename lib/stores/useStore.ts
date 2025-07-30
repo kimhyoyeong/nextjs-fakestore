@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { Product } from '@/types/product';
+import { fetchProducts } from '@/lib/api/products';
 
 interface Store {
   products: Product[];
@@ -21,18 +22,20 @@ export const useStore = create<Store>((set, get) => ({
   fetchProducts: async () => {
     set({ loading: true });
     try {
-      const response = await fetch('https://fakestoreapi.com/products');
-      const products = await response.json();
+      const products = await fetchProducts();
 
       // 테스트용 딜레이
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
+      const selectedCategory = get().selectedCategory;
+      const filteredProducts =
+        selectedCategory === 'all'
+          ? products
+          : products.filter((p: Product) => p.category === selectedCategory);
+
       set({
         products,
-        filteredProducts:
-          get().selectedCategory === 'all'
-            ? products
-            : products.filter((p: Product) => p.category === get().selectedCategory),
+        filteredProducts,
         loading: false,
       });
       console.log('products', products);
@@ -45,19 +48,20 @@ export const useStore = create<Store>((set, get) => ({
   setSelectedCategory: (category: string | null) => {
     const currentCategory = category ?? 'all';
     const { products } = get();
-    const filtered =
+    const filteredProducts =
       currentCategory === 'all'
         ? products
         : products.filter((p: Product) => p.category === currentCategory);
 
     set({
       selectedCategory: currentCategory,
-      filteredProducts: filtered,
+      filteredProducts,
     });
   },
 
   getCategories: () => {
     const { products } = get();
+    if (products.length === 0) return ['all']; // 제품이 없으면 'all'만 반환
     return ['all', ...Array.from(new Set(products.map((p: Product) => p.category)))];
   },
 

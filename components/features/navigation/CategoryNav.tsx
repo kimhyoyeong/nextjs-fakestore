@@ -12,7 +12,7 @@ export function CategoryNav() {
         {categories.map((category) => (
           <li key={category} className="inline-block">
             <Link
-              href={category === 'all' ? '/' : `/?category=${category}`}
+              href={category === 'all' ? '/products' : `/products?category=${category}`}
               className={`block px-1 pb-2 text-base font-semibold transition-colors focus:outline-none ${
                 category === selectedCategory
                   ? 'border-b-2 border-orange-500 text-orange-500 dark:border-orange-400 dark:text-orange-400'
