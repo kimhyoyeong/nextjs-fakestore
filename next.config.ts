@@ -7,17 +7,29 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'placehold.co',
         port: '',
-        pathname: '/**', // 모든 경로 허용
+        pathname: '/**',
       },
       {
         protocol: 'https',
         hostname: 'api.escuelajs.co',
         port: '',
-        pathname: '/**', // 모든 경로 허용
+        pathname: '/**',
       },
       {
         protocol: 'https',
         hostname: 'i.imgur.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'img.freepik.com',
         port: '',
         pathname: '/**',
       },
