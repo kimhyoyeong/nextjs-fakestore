@@ -7,15 +7,15 @@ interface Store {
   filteredProducts: Product[]; // 선택한 카테고리에 따른 필터링된 상품 목록
   categories: Category[]; // 카테고리 목록
   selectedCategory: string; // 현재 선택된 카테고리명 (또는 'all' 전체)
+  hasMore: boolean;
+  categoryOffsets: Record<string, number>; // 카테고리별 offset 관리
 
   // 상태 변경 함수들
   setProducts: (products: Product[]) => void; // 전체 상품 상태 설정
   setCategories: (categories: Category[]) => void; // 카테고리 목록 상태 설정
   setSelectedCategory: (category: string) => void; // 선택된 카테고리 변경
-  loadMoreProducts: (
-    fetchMoreFn: (offset: number, limit: number) => Promise<Product[]>,
-    limit?: number
-  ) => Promise<void>; // 더보기 상품 로드
+  setHasMore: (hasMore: boolean) => void;
+  loadMoreProducts: () => Promise<void>; // 더보기 상품 로드
 }
 
 export const useStore = create<Store>((set, get) => ({
@@ -24,12 +24,17 @@ export const useStore = create<Store>((set, get) => ({
   filteredProducts: [],
   categories: [],
   selectedCategory: 'all', // 초기값 all
+  hasMore: true,
+  categoryOffsets: {}, // 카테고리별 offset 초기화
+
+  setHasMore: (hasMore) => set({ hasMore }),
 
   // 전체 상품 목록 설정 함수
   setProducts: (products) => {
     set({
       products, // 전체 상품 목록 업데이트
       filteredProducts: products, // 필터된 상품도 전체 상품으로 초기화
+      hasMore: products.length >= 4, // 4개 이상이면 더 있을 가능성이 있음
     });
   },
 
@@ -49,25 +54,32 @@ export const useStore = create<Store>((set, get) => ({
       return {
         selectedCategory: category, // 선택 카테고리 업데이트
         filteredProducts, // 필터된 상품 목록 업데이트
+        hasMore: filteredProducts.length >= 4, // 4개 이상이면 더 있을 가능성이 있음
       };
     }),
   loadMoreProducts: async () => {
-    console.log('loadMoreProducts 실행 -> fetchMoreFn');
+    const state = get();
+    const { selectedCategory, filteredProducts } = state;
 
-    /* const state = get();
-    const offset = state.products.length;
+    // 현재 필터링된 상품의 개수를 offset으로 사용
+    const offset = filteredProducts.length;
 
-    const moreProducts = await fetchMoreFn(offset);
+    const moreProducts = await fetchMoreFn(offset, selectedCategory);
 
-    const newProducts = [...state.products, ...moreProducts];
-    const filteredProducts =
-      state.selectedCategory === 'all'
-        ? newProducts
-        : newProducts.filter((product) => product.category.name === state.selectedCategory);
-
-    set({
-      products: newProducts,
-      filteredProducts,
-    }); */
+    // 카테고리별로 상품 관리
+    if (selectedCategory === 'all') {
+      const newProducts = [...state.products, ...moreProducts];
+      set({
+        products: newProducts,
+        filteredProducts: newProducts,
+        hasMore: moreProducts.length > 0, // 0이면 더 이상 없음 → false
+      });
+    } else {
+      const newFilteredProducts = [...filteredProducts, ...moreProducts];
+      set({
+        filteredProducts: newFilteredProducts,
+        hasMore: moreProducts.length > 0, // 0이면 더 이상 없음 → false
+      });
+    }
   },
 }));

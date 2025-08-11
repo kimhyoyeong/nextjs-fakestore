@@ -29,8 +29,21 @@ export async function fetchProductsByCategorySlug(
   return res.json();
 }
 
-export async function fetchMoreFn(offset: number): Promise<Product[]> {
-  const response = await fetch(`https://api.escuelajs.co/api/v1/products?offset=${offset}&limit=4`);
-  const data = await response.json();
-  return data; // data가 이미 Product[] 배열임
+export async function fetchMoreFn(offset: number, categorySlug?: string): Promise<Product[]> {
+  console.log('offset222:', offset);
+  console.log('categorySlug222:', categorySlug);
+
+  if (!categorySlug || categorySlug === 'all') {
+    const res = await fetch(`https://api.escuelajs.co/api/v1/products?offset=${offset}&limit=4`);
+    if (!res.ok) throw new Error('Failed to fetch products');
+    return res.json();
+  }
+  // 특정 카테고리 더보기
+  /* const categories = await fetchCategories();
+  const category = categories.find((cat) => cat.slug === categorySlug);
+  if (!category) throw new Error('Category not found');
+  const url = `https://api.escuelajs.co/api/v1/categories/${category.id}/products?offset=${offset}&limit=4`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error('Failed to fetch products by category');
+  return res.json(); */
 }
