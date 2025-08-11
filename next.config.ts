@@ -1,5 +1,6 @@
 import type { NextConfig } from 'next';
 
+// Next.js 이미지 최적화: 보안·성능 위해 허용 도메인만 remotePatterns에 등록
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [

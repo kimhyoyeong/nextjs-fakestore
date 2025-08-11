@@ -10,7 +10,7 @@ interface CategoryNavProps {
 
 export function CategoryNav({ categories, selectedCategory }: CategoryNavProps) {
   return (
-    <nav className="flex justify-center p-6">
+    <nav className="flex justify-center py-6">
       <ul className="flex items-center gap-2 overflow-x-auto border-b whitespace-nowrap">
         <li className="inline-block">
           <Link

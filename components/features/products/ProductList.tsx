@@ -9,7 +9,7 @@ interface ProductListProps {
 
 export function ProductList({ products }: ProductListProps) {
   return (
-    <div className="mx-auto flex max-w-2xl flex-col gap-4">
+    <div className="mx-auto flex flex-col gap-4">
       {products.map((product) => (
         <ProductCard key={product.id} product={product} />
       ))}
@@ -27,6 +27,7 @@ function ProductCard({ product }: { product: Product }) {
           fill
           className="object-contain p-2"
           sizes="128px"
+          unoptimized //이미지 최적화 비활성화
         />
       </div>
       <div className="flex flex-1 flex-col justify-between px-4">
