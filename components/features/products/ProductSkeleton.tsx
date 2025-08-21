@@ -43,17 +43,3 @@ export function ProductListSkeleton({ count = 6 }: { count?: number }) {
     </div>
   );
 }
-// 카테고리 네비게이션 스켈레톤
-export function CategoryNavSkeleton() {
-  return (
-    <nav className="mx-auto mb-6 max-w-2xl">
-      <div className="grid grid-cols-5 border-b border-gray-200 dark:border-gray-700">
-        {Array.from({ length: 5 }).map((_, index) => (
-          <div key={index} className="p-2">
-            <Skeleton className="mb-2 h-6 w-full" />
-          </div>
-        ))}
-      </div>
-    </nav>
-  );
-}

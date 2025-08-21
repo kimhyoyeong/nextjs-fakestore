@@ -1,12 +1,11 @@
 import { create } from 'zustand';
-import { Product } from '@/types/product';
 
 interface StoreState {
-  products: Product[];
-  filteredProducts: Product[];
+  selectedCategory: string;
+  setSelectedCategory: (selectedCategory: string) => void;
 }
 
-export const useStore = create<StoreState>((set, get) => ({
-  products: [],
-  filteredProducts: [],
+export const useStore = create<StoreState>((set) => ({
+  selectedCategory: 'all',
+  setSelectedCategory: (selectedCategory: string) => set({ selectedCategory }),
 }));
