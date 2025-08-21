@@ -3,6 +3,7 @@ import { ProductsPageClient } from '@/components/features/products/ProductsPageC
 import { CategoryNav } from '@/components/features/navigation/CategoryNav';
 
 interface Props {
+  // Next.js 서버 컴포넌트에서 URL 쿼리스트링(?category=value)을 props로 받아오는 객체 비동기임
   searchParams?: { category?: string };
 }
 
@@ -14,6 +15,8 @@ export default async function ProductsPage({ searchParams }: Props) {
     category === 'all'
       ? await fetchProducts() // 전체 상품
       : await fetchCategoryProducts(category); // 카테고리별 상품
+
+  console.log('✅ [SERVER] products:', products);
 
   return (
     <>
