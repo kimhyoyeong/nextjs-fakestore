@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { Product } from '@/types/product';
+import Link from 'next/link';
 
 interface ProductListProps {
   products: Product[];
@@ -30,9 +31,11 @@ function ProductCard({ product }: { product: Product }) {
         />
       </div>
       <div className="flex flex-1 flex-col justify-between px-4">
-        <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
-          {product.title}
-        </h3>
+        <Link href={`/products/${product.id}`} className="hover:underline">
+          <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
+            {product.title}
+          </h3>
+        </Link>
         <div className="mb-2 flex items-center gap-2">
           <span className="text-xl font-bold text-orange-500 dark:text-orange-400">
             ${product.price}

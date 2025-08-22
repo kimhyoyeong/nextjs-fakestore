@@ -4,7 +4,7 @@ import { CategoryNav } from '@/components/features/navigation/CategoryNav';
 
 interface Props {
   // Next.js 서버 컴포넌트에서 URL 쿼리스트링(?category=value)을 props로 받아오는 객체 비동기임
-  searchParams?: { category?: string };
+  searchParams: Promise<{ category?: string }>;
 }
 
 export default async function ProductsPage({ searchParams }: Props) {
