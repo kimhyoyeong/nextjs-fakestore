@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Roboto, Roboto_Mono } from 'next/font/google';
 import './globals.css';
 import { Header } from '@/components/layouts/Header';
+import { CartButton } from '@/components/features/cart/CartButton';
 
 const roboto = Roboto({
   variable: '--font-roboto',
@@ -30,6 +31,7 @@ export default function RootLayout({
       <body className={`${roboto.variable} ${robotoMono.variable} antialiased`}>
         <Header />
         <main>{children}</main>
+        <CartButton />
       </body>
     </html>
   );

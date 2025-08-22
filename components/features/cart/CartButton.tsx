@@ -2,10 +2,6 @@ export function CartButton() {
   return (
     <button
       className="fixed right-6 bottom-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-r from-orange-400 via-red-500 to-pink-500 p-3 shadow-lg transition-all duration-200 hover:scale-110 hover:shadow-xl"
-      onClick={() => {
-        // TODO: 장바구니 페이지로 이동 또는 모달 열기
-        console.log('장바구니 열기');
-      }}
       aria-label="장바구니 보기"
     >
       <svg

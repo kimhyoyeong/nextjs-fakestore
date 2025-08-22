@@ -2,7 +2,6 @@
 
 import { useEffect } from 'react';
 import { ProductList } from '@/components/features/products/ProductList';
-import { CartButton } from '@/components/features/cart/CartButton';
 import { Product } from '@/types/product';
 import { useStore } from '@/lib/stores/useStore';
 import { useState } from 'react';
@@ -29,7 +28,6 @@ export function ProductsPageClient({ products, category }: Props) {
       <div className="container mx-auto px-4 py-8">
         {loading ? <ProductListSkeleton count={4} /> : <ProductList products={products} />}
       </div>
-      <CartButton />
     </div>
   );
 }
