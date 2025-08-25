@@ -1,6 +1,7 @@
 import { fetchProducts, fetchCategoryProducts, fetchCategories } from '@/lib/api/products';
 import { ProductsPageClient } from '@/components/features/products/ProductsPageClient';
 import { CategoryNav } from '@/components/features/navigation/CategoryNav';
+import { ProductList } from '@/components/features/products/ProductList';
 
 interface Props {
   // Next.js 서버 컴포넌트에서 URL 쿼리스트링(?category=value)을 props로 받아오는 객체 비동기임
@@ -22,6 +23,11 @@ export default async function ProductsPage({ searchParams }: Props) {
     <>
       <CategoryNav categories={categories} />
       <ProductsPageClient products={products} category={category} />
+      {/* <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+        <div className="container mx-auto max-w-2xl px-4 py-8">
+          <ProductList products={products} />
+        </div>
+      </div> */}
     </>
   );
 }

@@ -1,31 +1,31 @@
-export async function fetchProducts() {
-  const res = await fetch('https://fakestoreapi.com/products', {
-    cache: 'no-store', // 최신 데이터
-  });
-  if (!res.ok) throw new Error('Failed to fetch products');
+// src/lib/api/products.ts
+const BASE_URL = 'https://fakestoreapi.com/products';
+export const DEFAULT_LIMIT = '';
+
+async function fetchAPI(url: string) {
+  const res = await fetch(url, { cache: 'no-store' });
+  if (!res.ok) throw new Error(`Failed to fetch: ${url}`);
   return res.json();
 }
 
+// 전체 제품 가져오기
+export async function fetchProducts(limit: number = DEFAULT_LIMIT) {
+  const query = limit ? `?limit=${limit}` : '';
+  return fetchAPI(`${BASE_URL}${query}`);
+}
+
+// 카테고리 목록 가져오기
 export async function fetchCategories() {
-  const res = await fetch('https://fakestoreapi.com/products/categories', {
-    cache: 'no-store',
-  });
-  if (!res.ok) throw new Error('Failed to fetch categories');
-  return res.json();
+  return fetchAPI(`${BASE_URL}/categories`);
 }
 
-export async function fetchCategoryProducts(category: string) {
-  const res = await fetch(`https://fakestoreapi.com/products/category/${category}`, {
-    cache: 'no-store', // 최신 데이터
-  });
-  if (!res.ok) throw new Error('Failed to fetch products');
-  return res.json();
+// 특정 카테고리 제품 가져오기
+export async function fetchCategoryProducts(category: string, limit: number = DEFAULT_LIMIT) {
+  const query = limit ? `?limit=${limit}` : '';
+  return fetchAPI(`${BASE_URL}/category/${category}${query}`);
 }
 
+// 특정 제품 가져오기
 export async function fetchProductById(id: number) {
-  const res = await fetch(`https://fakestoreapi.com/products/${id}`, {
-    cache: 'no-store',
-  });
-  if (!res.ok) throw new Error('Failed to fetch product');
-  return res.json();
+  return fetchAPI(`${BASE_URL}/${id}`);
 }

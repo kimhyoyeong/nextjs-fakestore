@@ -1,5 +1,3 @@
-'use client';
-
 import Image from 'next/image';
 import { Product } from '@/types/product';
 import Link from 'next/link';
@@ -10,7 +8,7 @@ interface ProductListProps {
 
 export function ProductList({ products }: ProductListProps) {
   return (
-    <div className="mx-auto flex max-w-2xl flex-col gap-4">
+    <div className="flex flex-col gap-4">
       {products.map((product) => (
         <ProductCard key={product.id} product={product} />
       ))}
@@ -21,15 +19,20 @@ export function ProductList({ products }: ProductListProps) {
 function ProductCard({ product }: { product: Product }) {
   return (
     <div className="flex overflow-hidden bg-white p-8 duration-300 dark:bg-gray-800">
-      <div className="relative h-32 w-32 flex-shrink-0">
-        <Image
-          src={product.image}
-          alt={product.title}
-          fill
-          className="object-contain p-2"
-          sizes="128px"
-        />
-      </div>
+      <Link
+        href={`/products/${product.id}`}
+        className="block transform transition duration-300 hover:scale-110"
+      >
+        <div className="relative h-32 w-32 flex-shrink-0">
+          <Image
+            src={product.image}
+            alt={product.title}
+            fill
+            className="object-contain p-2"
+            sizes="128px"
+          />
+        </div>
+      </Link>
       <div className="flex flex-1 flex-col justify-between px-4">
         <Link href={`/products/${product.id}`} className="hover:underline">
           <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">

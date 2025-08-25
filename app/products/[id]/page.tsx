@@ -9,6 +9,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const { id } = await params;
   const product = await fetchProductById(id);
 
+  console.log('✅ [SERVER] selected product:', product);
+
   if (!product) {
     return (
       <div className="flex h-[60vh] items-center justify-center text-lg text-gray-500">
